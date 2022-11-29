@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 @TestMethodOrder(MethodOrderer.Random.class)
-public class MethodOrderedRandomlyTest {
+public class MethodsOrderedRandomlyTest {
 
     @Test
     void testA() {
