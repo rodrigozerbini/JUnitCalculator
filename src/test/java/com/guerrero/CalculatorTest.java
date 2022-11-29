@@ -2,12 +2,17 @@ package com.guerrero;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.sun.org.apache.xpath.internal.Arg;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayName("Test Math operations in Calculator")
 class CalculatorTest {
@@ -57,21 +62,33 @@ class CalculatorTest {
 
     @Test
     void testDivideIntegers_WhenIsDividedByZero_ShouldThrowArithmeticException() {
+        // Arrange
+        int dividend = 4;
+        int divisor = 0;
 
         // Act & Assert
-        assertThrows(ArithmeticException.class, ()-> {calculator.divideIntegers(5, 0);}, "5/0 should return an exception");
+        assertThrows(ArithmeticException.class, ()-> {
+            calculator.divideIntegers(dividend, divisor);},
+                "Division by zero should throw an exception");
     }
 
-    @DisplayName("Test 10 - 5 = 5")
-    @Test
-    void testSubtractIntegers_WhenTenIsSubtractedByFive_ShouldReturnFive() {
-        int a = 10;
-        int b = 5;
-        int expectedResult = 5;
+    @DisplayName("Test integer subtraction")
+    @ParameterizedTest
+    @MethodSource("subtractIntegersInputParameters")
+    void testSubtractIntegers(int a, int b, int expectedResult) {
         int result = calculator.subtractIntegers(a, b);
 
         // The lambda functions will be executed only if the test fails
         // This optimizes performance
         assertEquals(expectedResult, result, () -> a + "-" + b + " should be " + expectedResult);
+    }
+
+    public static Stream<Arguments> subtractIntegersInputParameters() {
+
+        return Stream.of(
+                Arguments.of(10, 5, 5),
+                Arguments.of(55, 1, 54),
+                Arguments.of(1, 0, 1)
+        );
     }
 }
