@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 @DisplayName("Test Math operations in Calculator")
@@ -90,5 +91,19 @@ class CalculatorTest {
                 Arguments.of(55, 1, 54),
                 Arguments.of(1, 0, 1)
         );
+    }
+
+    @DisplayName("Test integer addition")
+    @ParameterizedTest
+    @CsvSource( {
+            "1, 4, 5",
+            "30, 10, 40"
+    })
+    void testAddIntegers(int a, int b, int expectedResult) {
+        int result = calculator.addIntegers(a, b);
+
+        // The lambda functions will be executed only if the test fails
+        // This optimizes performance
+        assertEquals(expectedResult, result, () -> a + "+" + b + " should be " + expectedResult);
     }
 }
