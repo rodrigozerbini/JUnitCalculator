@@ -14,6 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("Test Math operations in Calculator")
 class CalculatorTest {
@@ -105,5 +106,12 @@ class CalculatorTest {
         // The lambda functions will be executed only if the test fails
         // This optimizes performance
         assertEquals(expectedResult, result, () -> a + "+" + b + " should be " + expectedResult);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings={"John", "Kate", "Alice"})
+    void valueSourceDemonstration(String firstName) {
+        System.out.println(firstName);
+        assertNotNull(firstName);
     }
 }
